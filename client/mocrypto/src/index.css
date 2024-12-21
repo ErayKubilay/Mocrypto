@@ -1,0 +1,249 @@
+.button{
+  border-radius: 5%;
+  color:blueviolet;
+  padding: 10px 15px;
+  border-width: 2px;
+  max-width: 550px;
+  background-color: aqua;
+  cursor: pointer;
+}
+
+
+.usergreet{
+  margin:15px;
+}
+
+.header{
+  position: sticky;
+  margin-top: 10px;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  background-color: hsl(180, 25%, 25%);
+  padding: 10px;
+  border-radius: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header .h1{
+  text-align: right;
+  font-size: 55px;
+  margin: 15px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.header .navlink{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-decoration: none;
+  position:relative;
+  top:0;
+  margin-right: 20px;
+  color:rgb(255, 255, 255);
+
+
+  &:hover:after {
+    width: 100%;
+    left: 0;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background:rgb(55, 125, 143);
+    left: 50%;
+    width: 0;
+    bottom: -4px;
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+}
+
+.header .navlist{
+  font-size :30px;
+  display:flex;
+  list-style-type:none;
+  justify-content: space-around;
+}
+
+
+
+.card{
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.101);
+  padding: 15px;
+  margin: 10px;
+  text-align: center;
+  max-width: 550px;
+  display:inline-block;
+}
+
+.card .card-img{
+  max-width: 60%;
+  height:auto;
+  border-radius: 5%;
+  margin-bottom: 10px;
+}
+
+.card .card-title{
+  font-family: 'Times New Roman', Times, serif;
+  margin:10;
+  color: hsl(196, 97%, 24%);
+}
+
+.card .card-text{
+  font-family: 'Times New Roman', Times, serif;
+  color: hsl(163, 100%, 59%);
+}
+
+
+
+.footer {
+  font-family: 'Times New Roman', Times, serif;
+  margin: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative;
+  border-top: 1px solid #ddd;
+} 
+
+
+#container {
+  place-items: end;
+  writing-mode: vertical-rl;
+}
+
+
+body {
+  margin: 0;
+  /* display:flex;  */
+  flex-direction:column; 
+  justify-content:center;
+  /* vertical-align: middle; */
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tabs-container {
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.tab-headers {
+  border: 3px solid #ddd;
+  width: 40%;
+  align-content: left;
+  position: sticky;
+  margin-top: 10px;
+  top: 0;
+  z-index: 999;
+  background-color: hsl(180, 25%, 25%);
+  display: flex;
+  justify-content: space-between;
+}
+
+.tab-header {
+  cursor:pointer;
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border: solid, black, 1px;
+}
+
+.tab-header.active {
+  border-bottom: 2px solid rgb(144, 144, 179);
+  font-weight: bold;
+}
+
+.tab-content {
+  width: 65%;
+  height:1000px;
+  padding: 20px;
+  border: 5px solid #ddd;
+  text-align: center;
+}
+/* :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */
