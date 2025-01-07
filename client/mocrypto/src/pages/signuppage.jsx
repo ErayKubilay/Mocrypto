@@ -8,75 +8,97 @@ function SignUpPage() {
     const [surname, setSurname] = useState('');
     // const [idNo, setIdNo] = useState('');
     //const [email, setEmail] = useState('');
-    const [userName, setUsername] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const type = "user";
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!name || !surname || !userName || !password || !confirmPassword) {
-        setErrorMessage('Please fill in all fields.');
-        return;
-        }
+        try {
 
-        if (password !== confirmPassword) {
-        setErrorMessage('Passwords do not match.');
-        return;
-        }
+            if (!name || !surname || !username || !password || !confirmPassword) {
+                setErrorMessage('Please fill in all fields.');
+                return;
+            }
 
-        if (userName === 'test') {
-        setErrorMessage('Username already in use.');
-        } else {
-        setSuccessMessage('Sign Up Successful!');
-        setErrorMessage('');
-        setName('');
-        setSurname('');
-        setIdNo('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+            if (password !== confirmPassword) {
+                setErrorMessage('Passwords do not match.');
+                return;
+            }
+
+            // TODO: Check for evert account in database
+            if (username === 'test') {
+                setErrorMessage('Username already in use.');
+            }
+
+            else {
+                setSuccessMessage('Sign Up Successful!');
+                setErrorMessage('');
+                setName('');
+                setSurname('');
+                //setIdNo('');
+                //setEmail('');
+                setPassword('');
+                setConfirmPassword('');
+            }
+
+            const body = { name, surname, username, password, type };
+
+            const response = await fetch("http://localhost:5000/accounts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+
+            console.log(response);
+
+        } catch (err) {
+
+            console.error(err.message);
+
         }
     };
 
     return (
         <body>
-            <Header name="Sign Up"/>
+            <Header name="Sign Up" />
             <div className="signup-container" style={styles.container}>
                 {errorMessage && <p style={styles.error}>{errorMessage}</p>}
                 {successMessage && <p style={styles.success}>{successMessage}</p>}
                 <form onSubmit={handleSubmit} style={styles.form}>
                     <div>
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        style={styles.input}
-                    />
+                        <label htmlFor="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            style={styles.input}
+                        />
                     </div>
                     <div>
-                    <label htmlFor="surname">Surname:</label>
-                    <input
-                        type="text"
-                        id="surname"
-                        value={surname}
-                        onChange={(e) => setSurname(e.target.value)}
-                        style={styles.input}
-                    />
+                        <label htmlFor="surname">Surname:</label>
+                        <input
+                            type="text"
+                            id="surname"
+                            value={surname}
+                            onChange={(e) => setSurname(e.target.value)}
+                            style={styles.input}
+                        />
                     </div>
                     <div>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={userName}
-                        onChange={(e) => setUsername(e.target.value)}
-                        style={styles.input}
-                    />
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            style={styles.input}
+                        />
                     </div>
                     {/* <div>
                     <label htmlFor="idNo">ID No:</label>
@@ -101,39 +123,39 @@ function SignUpPage() {
                     />
                     </div> */}
                     <div>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={styles.input}
-                    />
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={styles.input}
+                        />
                     </div>
                     <div>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        style={styles.input}
-                    />
+                        <label htmlFor="confirmPassword">Confirm Password:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            style={styles.input}
+                        />
                     </div>
                     <button type="submit" style={styles.button}>Sign Up!</button>
                 </form>
             </div>
-            <Footer/>
+            <Footer />
         </body>
     );
 }
 
 const styles = {
     container: {
-        padding:'40px',
+        padding: '40px',
         borderRadius: '10%',
         width: '400px',
-        backgroundColor:'gray',
+        backgroundColor: 'gray',
         margin: 'auto',
         display: 'flex',
         flexDirection: 'column',
