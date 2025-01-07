@@ -42,6 +42,7 @@ function SignUpPage() {
                 setSurname('');
                 //setIdNo('');
                 //setEmail('');
+                setUsername('');
                 setPassword('');
                 setConfirmPassword('');
             }
