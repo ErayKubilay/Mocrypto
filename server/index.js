@@ -50,11 +50,12 @@ app.get("/accounts", async (req, res) => {
     }
 });
 
-// Get account by id
-app.get("/accounts/:id", async (req, res) => {
+
+// Get account by username
+app.get("/accounts/:username", async (req, res) => {
     try {
-        const { id } = req.params;
-        const account = await pool.query("SELECT * FROM account WHERE id = $1", [id]);
+        const { username } = req.params;
+        const account = await pool.query("SELECT * FROM account WHERE username = $1", [username]);
 
         if (account.rows.length === 0) {
             return res.status(404).json({ error: "Account not found." });
