@@ -30,8 +30,18 @@ function SignUpPage() {
                 return;
             }
 
-            // TODO: Check for evert account in database
-            if (username === 'test') {
+            const body = { name, surname, username, password, type };
+
+            const response = await fetch("http://localhost:5000/accounts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+
+            console.log(response);
+
+            // Status 500 means client tried to add username which is in the database
+            if (response.status === 500) {
                 setErrorMessage('Username already in use.');
             }
 
@@ -47,15 +57,6 @@ function SignUpPage() {
                 setConfirmPassword('');
             }
 
-            const body = { name, surname, username, password, type };
-
-            const response = await fetch("http://localhost:5000/accounts", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            });
-
-            console.log(response);
 
         } catch (err) {
 
