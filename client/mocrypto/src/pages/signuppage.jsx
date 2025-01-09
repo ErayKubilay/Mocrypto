@@ -41,6 +41,7 @@ function SignUpPage() {
             console.log(response);
 
             // Status 500 means client tried to add username which is in the database
+            // Maybe you can find better way to check this
             if (response.status === 500) {
                 setErrorMessage('Username already in use.');
             }
