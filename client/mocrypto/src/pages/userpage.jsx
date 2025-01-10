@@ -2,7 +2,7 @@ import Card from '../components/Card.jsx'
 import Tabs from '../components/Tabs.jsx'
 import Footer from '../components/Footer.jsx';
 import { Fragment, useEffect, useState } from 'react';
-import { useLocation } from "react-router-dom";
+import { json, useLocation } from "react-router-dom";
 
 const UserPage = () => {
 
@@ -12,6 +12,8 @@ const UserPage = () => {
     console.log(userID);
 
     const [currencies, setCurrencies] = useState([]);
+    const [portfolio, setPortfolio] = useState([]);
+
     const getCurrencies = async () => {
         try {
 
@@ -28,9 +30,29 @@ const UserPage = () => {
             console.error(err.message);
         }
     }
+
     useEffect(() => {
         getCurrencies();
     }, []);
+
+    const getPortfolio = async () => {
+
+        try {
+            const response = await fetch(`http://localhost:5000/portfolio/${userID}`);
+            const jsonData = await response.json();
+
+            setPortfolio(jsonData);
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    useEffect(() => {
+        getPortfolio();
+    }, []);
+
+
 
     // For reference, delete it
     /*<tr>
@@ -72,16 +94,17 @@ const UserPage = () => {
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Price</th>
+                                <th>Amount</th>
                                 <th>Sell</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>BTC</td>
-                                <td>5200</td>
-                                <td>Sell</td>
-                            </tr>
+                            {portfolio.map(currency => (
+                                <tr>
+                                    <td>{currency.short_name}</td>
+                                    <td>{currency.amount}</td>
+                                    <td>Sell</td>
+                                </tr>))}
                         </tbody>
                     </table>
                 </Fragment>
