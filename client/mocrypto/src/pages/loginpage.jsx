@@ -31,7 +31,7 @@ function LoginPage() {
 
         if (username === user.username && password === user.password) {
             alert('Login successful. Welcome, ' + username + '!');
-            navigate('/userxxx');
+            navigate('/userxxx', { state: { userID: user.id } });
         }
 
         else if (username === 'admin' && password === 'admin') {

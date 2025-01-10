@@ -2,8 +2,14 @@ import Card from '../components/Card.jsx'
 import Tabs from '../components/Tabs.jsx'
 import Footer from '../components/Footer.jsx';
 import { Fragment, useEffect, useState } from 'react';
+import { useLocation } from "react-router-dom";
 
 const UserPage = () => {
+
+    const location = useLocation();
+    const userID = location.state?.userID;
+
+    console.log(userID);
 
     const [currencies, setCurrencies] = useState([]);
     const getCurrencies = async () => {

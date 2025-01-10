@@ -30,9 +30,9 @@ function SignUpPage() {
                 return;
             }
 
-            const body = { name, surname, username, password, type };
+            let body = { name, surname, username, password, type };
 
-            const response = await fetch("http://localhost:5000/accounts", {
+            let response = await fetch("http://localhost:5000/accounts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
@@ -48,6 +48,29 @@ function SignUpPage() {
 
             else {
                 setSuccessMessage('Sign Up Successful!');
+
+                // To see which id has assigned to newly created user
+                response = await fetch(`http://localhost:5000/accounts/${username}`);
+                const user = await response.json()
+
+                // USDT's id is 1
+                let cryptoID = '1';
+                let userID = user.id;
+                let shortName = 'USDT';
+                let name = 'Tether';
+                let amount = 10000;
+                body = { cryptoID, userID, shortName, name, amount };
+
+                console.log(body);
+
+                response = await fetch("http://localhost:5000/portfolio", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                });
+
+                console.log('portfolio post:' + response);
+
                 setErrorMessage('');
                 setName('');
                 setSurname('');
@@ -56,6 +79,7 @@ function SignUpPage() {
                 setUsername('');
                 setPassword('');
                 setConfirmPassword('');
+
             }
 
 
