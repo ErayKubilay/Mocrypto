@@ -13,6 +13,24 @@ const UserPage = () => {
 
     const [currencies, setCurrencies] = useState([]);
     const [portfolio, setPortfolio] = useState([]);
+    const [balance, setBalance] = useState('10000');
+
+    const getBalance = async () => {
+
+        try {
+            const response = await fetch(`http://localhost:5000/balance/${userID}`);
+            const jsonData = await response.json();
+
+            setBalance(jsonData.rows[0].amount);
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    useEffect(() => {
+        getBalance();
+    }, []);
 
     const getCurrencies = async () => {
         try {
@@ -21,9 +39,18 @@ const UserPage = () => {
             // const response = await fetch("Currency API here")
             // const jsonData = await response.json()
 
-            let jsonData = [{ name: 'BTC', price: '5000' }, { name: 'ETH', price: '1000' }];
+            try {
+                const response = await fetch('http://localhost:5000/cryptocurrency');
+                const jsonData = await response.json();
 
-            setCurrencies(jsonData);
+                setCurrencies(jsonData);
+
+            } catch (err) {
+                console.log(err.message);
+            }
+
+            //let jsonData = [{ id: 1, name: 'BTC', price: '5000' }, { id: 2, name: 'ETH', price: '1000' }];
+
 
         }
         catch (err) {
@@ -53,6 +80,20 @@ const UserPage = () => {
     }, []);
 
 
+    const buyCrypto = async (id) => {
+
+        try {
+            const response = await fetch(`http://localhost:5000/portfolio/${userID}`);
+            const jsonData = await response.json();
+
+            setPortfolio(jsonData);
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+
 
     // For reference, delete it
     /*<tr>
@@ -71,15 +112,17 @@ const UserPage = () => {
                             <tr>
                                 <th>Name</th>
                                 <th>Price</th>
-                                <th>Buy</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {currencies.map(currency => (
-                                <tr>
+                                <tr key={currency.id}>
                                     <td>{currency.name}</td>
                                     <td>{currency.price}</td>
-                                    <td>Buy</td>
+                                    <td><button className='btn btn-success'
+                                        onClick={() => buyCrypto(currency.crypto_id)}
+                                    > Buy </button></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -95,15 +138,16 @@ const UserPage = () => {
                             <tr>
                                 <th>Name</th>
                                 <th>Amount</th>
-                                <th>Sell</th>
+                                <th>Balance: {balance} USDT</th>
                             </tr>
                         </thead>
                         <tbody>
                             {portfolio.map(currency => (
-                                <tr>
+                                <tr id={currency.crypto_id}>
                                     <td>{currency.short_name}</td>
                                     <td>{currency.amount}</td>
-                                    <td>Sell</td>
+                                    <td><button className='btn btn-danger'
+                                        onClick={() => sellCrypto(currency.crypto_id)}> Sell </button></td>
                                 </tr>))}
                         </tbody>
                     </table>

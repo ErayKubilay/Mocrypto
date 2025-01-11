@@ -15,7 +15,6 @@ CREATE TABLE cryptocurrency (
 	name VARCHAR(255) NOT NULL,
 	shortname VARCHAR(255) NOT NULL,
 	price FLOAT NOT NULL,
-	volume FLOAT,
 	PRIMARY KEY (id)
 );
 
@@ -31,3 +30,9 @@ CREATE TABLE portfolio (
 
 INSERT INTO cryptocurrency (id, name, shortname, price)
 VALUES ('1', 'Tether', 'USDT', 1.0);
+
+INSERT INTO cryptocurrency (id, name, shortname, price)
+VALUES ('2', 'Bitcoin', 'BTC', 5000);
+
+INSERT INTO cryptocurrency (id, name, shortname, price)
+VALUES ('3', 'Etherium', 'ETH', 1500);

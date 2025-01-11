@@ -147,11 +147,54 @@ app.get("/portfolio/:user_id", async (req, res) => {
             return res.status(404).json({ message: "No portfolio found for this user." });
         }
 
+        console.log(portfolio.rows);
+
         // Return the portfolio data as a JSON response
         res.json(portfolio.rows);
     } catch (err) {
         console.error(err.message);
         // Return a 500 error if there is an issue with the query or server
         res.status(500).json({ error: "An error occurred while retrieving the portfolio." });
+    }
+});
+
+// GET user balance which is USDT amount
+app.get("/balance/:user_id", async (req, res) => {
+    try {
+        // Retrieve the user_id from the URL parameters
+        const { user_id } = req.params;
+
+        // Run the PostgreSQL query to get all portfolios for the specific user
+        const balance = await pool.query(
+            "SELECT * FROM portfolio WHERE user_id = $1 AND CAST(crypto_id AS INTEGER) = 1",
+            [user_id]
+        );
+
+        // If no portfolios are found, return a 404 error
+        if (balance.rows.length === 0) {
+            return res.status(404).json({ message: "No balance found for this user." });
+        }
+        console.log(balance.rows);
+        // Return the portfolio data as a JSON response
+        res.json(balance.rows);
+    } catch (err) {
+        console.error(err.message);
+        // Return a 500 error if there is an issue with the query or server
+        res.status(500).json({ error: "An error occurred while retrieving the balance." });
+    }
+});
+// ROUTES FOR cryptocurrency
+
+// Get all crptocurrencies except USDT
+app.get("/cryptocurrency", async (req, res) => {
+    try {
+        const cryptocurrencies = await pool.query(
+            "SELECT * FROM cryptocurrency WHERE CAST(id AS INTEGER) > 1"
+        );
+
+        res.json(cryptocurrencies.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "An error occurred while fetching cryptocurrencies." });
     }
 });
