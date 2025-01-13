@@ -124,6 +124,7 @@ app.post("/portfolio", async (req, res) => {
 
         res.json(newPortfolio.rows[0]);
         console.log(req.body);
+
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "An error occurred while adding the portfolio." });
@@ -138,16 +139,9 @@ app.get("/portfolio/:user_id", async (req, res) => {
 
         // Run the PostgreSQL query to get all portfolios for the specific user
         const portfolio = await pool.query(
-            "SELECT * FROM portfolio WHERE user_id = $1",
+            "SELECT * FROM portfolio WHERE user_id = $1 AND CAST(crypto_id AS INTEGER) > 1",
             [user_id]
         );
-
-        // If no portfolios are found, return a 404 error
-        if (portfolio.rows.length === 0) {
-            return res.status(404).json({ message: "No portfolio found for this user." });
-        }
-
-        console.log(portfolio.rows);
 
         // Return the portfolio data as a JSON response
         res.json(portfolio.rows);
@@ -174,18 +168,48 @@ app.get("/balance/:user_id", async (req, res) => {
         if (balance.rows.length === 0) {
             return res.status(404).json({ message: "No balance found for this user." });
         }
-        console.log(balance.rows);
+
         // Return the portfolio data as a JSON response
-        res.json(balance.rows);
+        res.json(balance);
     } catch (err) {
         console.error(err.message);
         // Return a 500 error if there is an issue with the query or server
         res.status(500).json({ error: "An error occurred while retrieving the balance." });
     }
 });
+
+app.put("/balance/:user_id", async (req, res) => {
+    try {
+
+        // Retrieve the user_id from the URL parameters
+        const { user_id } = req.params;
+        const { new_balance } = req.body;
+
+        console.log('userid: ' + user_id);
+        console.log('new_balance: ' + new_balance);
+        // Run the PostgreSQL query to get all portfolios for the specific user
+        const updatedBalance = await pool.query(
+            "UPDATE portfolio SET amount = $1 WHERE CAST(crypto_id AS INTEGER) = 1 AND user_id = $2 RETURNING *",
+            [new_balance, user_id]
+        );
+
+        // If no portfolios are found, return a 404 error
+        if (updatedBalance.rows.length === 0) {
+            return res.status(404).json({ message: "No balance found for this user." });
+        }
+
+        // Return the portfolio data as a JSON response
+        res.json(updatedBalance.rows[0].amount);
+    } catch (err) {
+        console.error(err.message);
+        // Return a 500 error if there is an issue with the query or server
+        res.status(500).json({ error: "An error occurred while retrieving the balance." });
+    }
+});
+
 // ROUTES FOR cryptocurrency
 
-// Get all crptocurrencies except USDT
+// GET all crptocurrencies except USDT
 app.get("/cryptocurrency", async (req, res) => {
     try {
         const cryptocurrencies = await pool.query(
@@ -196,5 +220,63 @@ app.get("/cryptocurrency", async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "An error occurred while fetching cryptocurrencies." });
+    }
+});
+
+
+// GET cryptocurrency via ID
+app.get("/cryptocurrency/:crypto_id", async (req, res) => {
+    try {
+        const { crypto_id } = req.params;
+
+        const cryptocurrency = await pool.query(
+            "SELECT * FROM cryptocurrency WHERE id = $1",
+            [crypto_id]
+        );
+
+        if (cryptocurrency.rows.length === 0) {
+            return res.status(404).json({ error: "Cryptocurrency not found." });
+        }
+
+        res.json(cryptocurrency.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "An error occurred while fetching the cryptocurrency." });
+    }
+});
+// ROUTES FOR TRANSACTION
+
+
+// GET transaction of specific user
+app.get("/transaction/:user_id", async (req, res) => {
+    try {
+
+        const { user_id } = req.params;
+
+        const transactions = await pool.query("SELECT * FROM transaction WHERE user_id = $1", [user_id]);
+        res.json(transactions.rows);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "An error occurred while fetching transactions." });
+    }
+});
+
+
+// POST TRANSACTION
+app.post("/transaction", async (req, res) => {
+    try {
+        const { user_id, value, base_crypto, type } = req.body;
+
+        const newTransaction = await pool.query(
+            "INSERT INTO transaction (user_id, value, base_crypto, type) VALUES ($1, $2, $3, $4) RETURNING *",
+            [user_id, value, base_crypto, type]
+        );
+
+        res.json(newTransaction.rows[0]);
+        console.log("New transaction added:", req.body);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "An error occurred while adding the transaction." });
     }
 });

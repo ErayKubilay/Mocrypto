@@ -27,6 +27,15 @@ CREATE TABLE portfolio (
 	PRIMARY KEY (crypto_id)
 );
 
+CREATE TABLE transaction (
+	id SERIAL NOT NULL,
+	user_id INT NOT NULL, 
+	value FLOAT NOT NULL, 
+	base_crypto VARCHAR(255) NOT NULL, 
+	type VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id)
+);
+
 
 INSERT INTO cryptocurrency (id, name, shortname, price)
 VALUES ('1', 'Tether', 'USDT', 1.0);

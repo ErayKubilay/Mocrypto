@@ -13,6 +13,7 @@ const UserPage = () => {
 
     const [currencies, setCurrencies] = useState([]);
     const [portfolio, setPortfolio] = useState([]);
+    const [transactions, setTransactions] = useState([]);
     const [balance, setBalance] = useState('10000');
 
     const getBalance = async () => {
@@ -20,6 +21,8 @@ const UserPage = () => {
         try {
             const response = await fetch(`http://localhost:5000/balance/${userID}`);
             const jsonData = await response.json();
+
+            console.log(jsonData.rows[0].amount);
 
             setBalance(jsonData.rows[0].amount);
 
@@ -65,6 +68,7 @@ const UserPage = () => {
     const getPortfolio = async () => {
 
         try {
+
             const response = await fetch(`http://localhost:5000/portfolio/${userID}`);
             const jsonData = await response.json();
 
@@ -80,13 +84,70 @@ const UserPage = () => {
     }, []);
 
 
-    const buyCrypto = async (id) => {
+    const getTransactions = async () => {
 
         try {
-            const response = await fetch(`http://localhost:5000/portfolio/${userID}`);
+
+            const response = await fetch(`http://localhost:5000/transaction/${userID}`);
             const jsonData = await response.json();
 
-            setPortfolio(jsonData);
+            console.log(jsonData);
+            setTransactions(jsonData);
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    useEffect(() => {
+        getTransactions();
+    }, []);
+
+    const buyCrypto = async (crypto_id) => {
+
+        try {
+            const userInput = prompt("Please enter USDT amount:");
+
+            // Check if input is a valid integer
+            const amount = Number(userInput);
+
+            if (!Number.isInteger(amount) && isNaN(amount)) {
+                alert("Please enter a integer value");
+            }
+            else {
+
+                if (balance < amount) {
+
+                    alert("Not enough balance.");
+                }
+                else {
+
+                    console.log('cryptoid: ' + crypto_id);
+                    let boughtCryptocurrency = await fetch(`http://localhost:5000/cryptocurrency/${crypto_id}`);
+                    let boughtCryptocurrencyJSON = await boughtCryptocurrency.json();
+
+                    console.log(boughtCryptocurrencyJSON);
+
+                    let body = { new_balance: balance - amount };
+
+                    let response = await fetch(`http://localhost:5000/balance/${userID}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    });
+
+                    body = { user_id: userID, value: amount, base_crypto: boughtCryptocurrencyJSON.shortname, type: 'Buy' };
+
+                    response = await fetch('http://localhost:5000/transaction', {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    });
+
+                    alert(`You bought ${amount} USDT worth of Bitcoin.`);
+
+                }
+            }
 
         } catch (err) {
             console.log(err.message);
@@ -112,7 +173,7 @@ const UserPage = () => {
                             <tr>
                                 <th>Name</th>
                                 <th>Price</th>
-                                <th></th>
+                                <th>Balance: {balance} USDT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,7 +182,7 @@ const UserPage = () => {
                                     <td>{currency.name}</td>
                                     <td>{currency.price}</td>
                                     <td><button className='btn btn-success'
-                                        onClick={() => buyCrypto(currency.crypto_id)}
+                                        onClick={() => buyCrypto(currency.id)}
                                     > Buy </button></td>
                                 </tr>
                             ))}
@@ -162,20 +223,16 @@ const UserPage = () => {
                             <tr>
                                 <th>Name</th>
                                 <th>Amount</th>
-                                <th>Type //(Buy or Sell)</th>
+                                <th>Type</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>BTC</td>
-                                <td>0.2</td>
-                                <td>Buy</td>
-                            </tr>
-                            <tr>
-                                <td>BTC</td>
-                                <td>0.1</td>
-                                <td>Sell</td>
-                            </tr>
+                            {transactions.map(transaction => (
+                                <tr id={transaction.id}>
+                                    <td>{transaction.base_crypto}</td>
+                                    <td>{transaction.value} USDT</td>
+                                    <td>{transaction.type}</td>
+                                </tr>))}
                         </tbody>
                     </table>
                 </Fragment>
