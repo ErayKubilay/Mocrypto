@@ -122,21 +122,38 @@ const UserPage = () => {
                 }
                 else {
 
-                    console.log('cryptoid: ' + crypto_id);
-                    let boughtCryptocurrency = await fetch(`http://localhost:5000/cryptocurrency/${crypto_id}`);
-                    let boughtCryptocurrencyJSON = await boughtCryptocurrency.json();
-
-                    console.log(boughtCryptocurrencyJSON);
+                    let response = await fetch(`http://localhost:5000/cryptocurrency/${crypto_id}`);
+                    let boughtCryptocurrency = await response.json();
 
                     let body = { new_balance: balance - amount };
 
-                    let response = await fetch(`http://localhost:5000/balance/${userID}`, {
+                    response = await fetch(`http://localhost:5000/balance/${userID}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(body)
                     });
 
-                    body = { user_id: userID, value: amount, base_crypto: boughtCryptocurrencyJSON.shortname, type: 'Buy' };
+
+                    response = await fetch(`http://localhost:5000/portfolio/${userID}/${boughtCryptocurrency.id}`);
+                    let isOwned = await response.json();
+
+                    console.log(boughtCryptocurrency);
+                    if (isOwned.length === 0) {
+
+                        body = { crypto_id: boughtCryptocurrency.id, user_id: userID, short_name: boughtCryptocurrency.shortname, name: boughtCryptocurrency.name, amount: amount };
+
+                        response = await fetch('http://localhost:5000/portfolio/', {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(body)
+                        });
+                    }
+
+                    // TODO: add bought crypto to existing if user has bought before
+                    // TODO: auto refresh after bought
+
+
+                    body = { user_id: userID, value: amount, base_crypto: boughtCryptocurrency.shortname, type: 'Buy' };
 
                     response = await fetch('http://localhost:5000/transaction', {
                         method: "POST",

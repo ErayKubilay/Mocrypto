@@ -114,12 +114,12 @@ app.delete("/accounts/:id", async (req, res) => {
 app.post("/portfolio", async (req, res) => {
     try {
 
-        const { cryptoID, userID, shortName, name, amount } = req.body;
+        const { crypto_id, user_id, short_name, name, amount } = req.body;
 
 
         const newPortfolio = await pool.query(
             "INSERT INTO portfolio (crypto_id, user_id, short_name, name, amount) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-            [cryptoID, userID, shortName, name, amount]
+            [crypto_id, user_id, short_name, name, amount]
         );
 
         res.json(newPortfolio.rows[0]);
@@ -152,6 +152,24 @@ app.get("/portfolio/:user_id", async (req, res) => {
     }
 });
 
+// GET specific crypto that specific user has
+app.get("/portfolio/:user_id/:crypto_id", async (req, res) => {
+    try {
+        const { user_id, crypto_id } = req.params;
+
+        // Veritabanında ilgili kaydı sorgula
+        const portfolio = await pool.query(
+            "SELECT * FROM portfolio WHERE user_id = $1 AND crypto_id = $2",
+            [user_id, crypto_id]
+        );
+
+        res.json(portfolio.rows);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "An error occurred while fetching the portfolio record." });
+    }
+});
 // GET user balance which is USDT amount
 app.get("/balance/:user_id", async (req, res) => {
     try {
@@ -253,7 +271,7 @@ app.get("/transaction/:user_id", async (req, res) => {
 
         const { user_id } = req.params;
 
-        const transactions = await pool.query("SELECT * FROM transaction WHERE user_id = $1", [user_id]);
+        const transactions = await pool.query("SELECT * FROM transaction WHERE user_id = $1 ORDER BY id DESC", [user_id]);
         res.json(transactions.rows);
 
     } catch (err) {
