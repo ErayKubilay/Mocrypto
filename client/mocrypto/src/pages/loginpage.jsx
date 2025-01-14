@@ -60,7 +60,7 @@ function LoginPage() {
 
     return (
         <body style={styles.page}>
-            <Header name="Log In" />
+            <Header style={styles.header} name="Log In" />
             <div className="login-container" style={styles.container}>
                 <h1 style={styles.title}>MOCRYPTO</h1>
                 {errorMessage && <p style={styles.error}>{errorMessage}</p>}
@@ -102,6 +102,13 @@ function LoginPage() {
 }
 
 const styles = {
+    header: {
+        width: '100%',
+        padding: '20px',
+        backgroundColor: '#333',
+        color: 'white',
+        textAlign: 'center',
+    },
     label: {
         fontSize: '20px',
         width: '35%',
@@ -122,11 +129,15 @@ const styles = {
     },
     page: {
         backgroundColor: '#444444',
-        minHeight: '100vh',
+        minHeight: '100vh', 
         display: 'flex',
         flexDirection: 'column',
     },
+
     container: {
+        justifyContent: 'center',
+
+        gap: '20px',
         padding: '40px',
         borderRadius: '10%',
         width: '400px',
@@ -135,8 +146,8 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '45px',
-        marginBottom: '130px',
+        marginTop: '160px',
+        marginBottom: '225px',
         boxShadow: '20px 15px 10px rgba(0, 0, 0, 0.1)',
     },
     title: {

@@ -1,9 +1,39 @@
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header.jsx';
+import React, { useState } from 'react';
+
 
 function Contact() {
+
+    const [buttonStyle, setButtonStyle] = useState({
+        padding: '10px',
+        backgroundColor: 'hsl(180, 25%, 25%)',
+        color: 'white',
+        fontSize: '16px',
+        cursor: 'pointer',
+        border: 'none',
+        transition: 'all 0.2s ease',
+    });
+
+    const handleMouseEnter = () => {
+        setButtonStyle((prevStyle) => ({
+            ...prevStyle,
+            backgroundColor: 'hsl(180, 35%, 30%)', 
+            transform: 'scale(0.85)', 
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', 
+        }));
+    };
+
+    const handleMouseLeave = () => {
+        setButtonStyle((prevStyle) => ({
+            ...prevStyle,
+            backgroundColor: 'hsl(180, 25%, 25%)', 
+            transform: 'scale(1)',
+            boxShadow: 'none',
+        }));
+    };
     return (
-        <>
+        <div style={styles.page}>
             <Header name="Contact Us" />
             <div style={styles.container}>
                 <h2 style={styles.heading}>Get in Touch With Us</h2>
@@ -28,7 +58,9 @@ function Contact() {
                         <label style={styles.label}>Message</label>
                         <textarea style={styles.textarea} placeholder="Type your message"></textarea>
                         
-                        <button style={styles.button}>Submit</button>
+                        <button style={buttonStyle}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}>Submit</button>
                     </form>
                 </div>
                 <div style={styles.map}>
@@ -41,12 +73,20 @@ function Contact() {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     );
 }
 
 const styles = {
+    page: {
+        backgroundColor: '#444444',
+        minHeight: '100vh', 
+        display: 'flex',
+        flexDirection: 'column',
+    },
     container: {
+        marginTop: '40px',
+        marginBottom: '60px',
         backgroundColor: 'lightgray',
         borderRadius: '25px',
         padding: '20px',

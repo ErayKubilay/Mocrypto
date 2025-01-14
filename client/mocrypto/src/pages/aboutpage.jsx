@@ -3,11 +3,11 @@ import Footer from '../components/Footer.jsx';
 
 function About() {
     return (
-        <>
+        <div style={styles.page}>
             <Header name="About" />
             <main style={styles.main}>
                 <section style={styles.section}>
-                    <h1 style={styles.title}>Welcome to Our Platform</h1>
+                    <h1 style={styles.title}>Welcome to Mocrypto</h1>
                     <p style={styles.description}>
                         Our mission is to provide the best tools and insights for managing your cryptocurrency portfolio. 
                         Whether you're a seasoned investor or just getting started, we aim to empower you with cutting-edge solutions.
@@ -29,21 +29,29 @@ function About() {
                 </section>
             </main>
             <Footer />
-        </>
+        </div>
     );
 }
 
 const styles = {
+    page: {
+        backgroundColor: '#444444',
+        minHeight: '100vh', 
+        display: 'flex',
+        flexDirection: 'column',
+    },
     main: {
+        marginTop: '40px',
+        marginBottom: '80px',
         padding: '20px',
         fontFamily: "'Arial', sans-serif",
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#444444',
         color: '#333',
     },
     section: {
-        marginBottom: '20px',
-        padding: '15px',
-        backgroundColor: '#fff',
+        marginTop: '15px',
+        padding: '35px',
+        backgroundColor: 'lightgray',
         borderRadius: '8px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     },

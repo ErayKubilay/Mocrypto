@@ -22,8 +22,8 @@ function LandingPage() {
 
 const styles = {
     page: {
-        backgroundColor: '#444444', // Background color for the whole page
-        minHeight: '100vh', // Covers the full viewport
+        backgroundColor: '#444444',
+        minHeight: '100vh', 
         display: 'flex',
         flexDirection: 'column',
     },

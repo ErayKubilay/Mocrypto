@@ -66,7 +66,8 @@ function SignUpPage() {
             if (response.status === 500) {
                 setErrorMessage('Username already in use.');
             } else {
-                setSuccessMessage('Sign Up Successful!');
+                alert('Sign Up Successful!');
+                navigate('/log-in');
 
                 // To see which id has assigned to newly created user
                 response = await fetch(`http://localhost:5000/accounts/${username}`);
@@ -104,7 +105,7 @@ function SignUpPage() {
 
     return (
         <body style={styles.page}>
-            <Header name="Sign Up" />
+            <Header style={styles.header} name="Sign Up" />
             <div className="signup-container" style={styles.container}>
                 <h1 style={styles.title}>MOCRYPTO</h1>
                 {errorMessage && <p style={styles.error}>{errorMessage}</p>}
@@ -172,13 +173,22 @@ function SignUpPage() {
 }
 
 const styles = {
+    header: {
+        width: '100%',
+        padding: '20px',
+        backgroundColor: '#333',
+        color: 'white',
+        textAlign: 'center',
+    },
     page: {
-        backgroundColor: '#444444', // Background color for the whole page
-        minHeight: '100vh', // Covers the full viewport
+        backgroundColor: '#444444',
+        minHeight: '100vh', 
         display: 'flex',
         flexDirection: 'column',
     },
     container: {
+        justifyContent: 'center',
+        gap: '20px',
         padding: '40px',
         borderRadius: '10%',
         width: '400px',
@@ -187,8 +197,8 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '45px',
-        marginBottom: '80px',
+        marginTop: '110px',
+        marginBottom: '195px',
         boxShadow: '20px 15px 10px rgba(0, 0, 0, 0.1)',
     },
     title: {
@@ -213,7 +223,7 @@ const styles = {
     },
     label: {
         fontSize: '20px',
-        width: '35%', // Ensures labels have the same width
+        width: '35%', 
         textAlign: 'left',
     },
     input: {

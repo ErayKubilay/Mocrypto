@@ -71,4 +71,17 @@ const styles = {
     },
 };
 
+const headerStyle = {
+    backgroundColor: 'hsl(180, 25%, 25%)',
+    padding: '10px 20px',
+    position: 'relative',
+    top: 0,
+    left: 0,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+};
+
+
 export default Header;
