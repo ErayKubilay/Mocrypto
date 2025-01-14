@@ -1,8 +1,8 @@
-import MainPage from './pages/mainpage.jsx';
+import LandingPage from './pages/landingpage.jsx';
 function App() {
 
   return(
-      <MainPage/>
+      <LandingPage/>
   );
 }
 
