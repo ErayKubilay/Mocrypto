@@ -13,7 +13,34 @@ function SignUpPage() {
     const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
     const type = "user";
+    const [buttonStyle, setButtonStyle] = useState({
+        padding: '10px',
+        backgroundColor: 'hsl(180, 25%, 25%)',
+        color: 'white',
+        fontSize: '16px',
+        cursor: 'pointer',
+        border: 'none',
+        marginBottom: '15px',
+        transition: 'all 0.2s ease',
+    });
 
+    const handleMouseEnter = () => {
+        setButtonStyle((prevStyle) => ({
+            ...prevStyle,
+            backgroundColor: 'hsl(180, 35%, 30%)', 
+            transform: 'scale(0.85)', 
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', 
+        }));
+    };
+
+    const handleMouseLeave = () => {
+        setButtonStyle((prevStyle) => ({
+            ...prevStyle,
+            backgroundColor: 'hsl(180, 25%, 25%)', 
+            transform: 'scale(1)',
+            boxShadow: 'none',
+        }));
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -110,7 +137,9 @@ function SignUpPage() {
                             style={styles.input}
                         />
                     </div>
-                    <button type="submit" style={styles.button}>Sign Up!</button>
+                    <button type="submit" style={buttonStyle} 
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}>Sign Up!</button>
                 </form>
                 <a href='/log-in' style={styles.a}>Already Have an Account?</a>
             </div>
@@ -172,15 +201,6 @@ const styles = {
         backgroundColor: '#444444',
         border: '2px solid #000000', // Sets a custom frame color (blue in this case)
         outline: 'none',
-    },
-    button: {
-        marginBottom: '30px',
-        padding: '10px',
-        backgroundColor: 'hsl(180, 25%, 25%)',
-        color: 'white',
-        fontSize: '16px',
-        cursor: 'pointer',
-        border: 'none',
     },
     error: {
         color: 'red',

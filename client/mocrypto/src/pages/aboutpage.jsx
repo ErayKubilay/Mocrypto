@@ -25,7 +25,6 @@ function About() {
                     <h2 style={styles.subtitle}>Our Story</h2>
                     <p style={styles.description}>
                         Founded in 2025, we started with a simple goal: to make cryptocurrency management easy and accessible for everyone. 
-                        Today, our platform serves thousands of users worldwide.
                     </p>
                 </section>
             </main>

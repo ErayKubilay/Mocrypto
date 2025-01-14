@@ -8,6 +8,33 @@ function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [buttonStyle, setButtonStyle] = useState({
+        padding: '10px',
+        backgroundColor: 'hsl(180, 25%, 25%)',
+        color: 'white',
+        fontSize: '16px',
+        cursor: 'pointer',
+        border: 'none',
+        transition: 'all 0.2s ease',
+    });
+
+    const handleMouseEnter = () => {
+        setButtonStyle((prevStyle) => ({
+            ...prevStyle,
+            backgroundColor: 'hsl(180, 35%, 30%)', 
+            transform: 'scale(0.85)', 
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', 
+        }));
+    };
+
+    const handleMouseLeave = () => {
+        setButtonStyle((prevStyle) => ({
+            ...prevStyle,
+            backgroundColor: 'hsl(180, 25%, 25%)', 
+            transform: 'scale(1)',
+            boxShadow: 'none',
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +66,7 @@ function LoginPage() {
                 {errorMessage && <p style={styles.error}>{errorMessage}</p>}
                 <form onSubmit={handleSubmit} style={styles.form}>
                     <div style={styles.formGroup}>
-                        <label htmlFor="username"  style={styles.label}>Username:</label>
+                        <label htmlFor="username" style={styles.label}>Username:</label>
                         <input
                             type="text"
                             id="username"
@@ -49,7 +76,7 @@ function LoginPage() {
                         />
                     </div>
                     <div style={styles.formGroup}>
-                        <label htmlFor="password"  style={styles.label}>Password:</label>
+                        <label htmlFor="password" style={styles.label}>Password:</label>
                         <input
                             type="password"
                             id="password"
@@ -58,7 +85,14 @@ function LoginPage() {
                             style={styles.input}
                         />
                     </div>
-                    <button type="submit" style={styles.button}>Login</button>
+                    <button
+                        type="submit"
+                        style={buttonStyle}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        Login
+                    </button>
                     <a href='/sign-up' style={styles.a}>Haven't Signed Up Yet?</a>
                 </form>
             </div>
@@ -70,7 +104,7 @@ function LoginPage() {
 const styles = {
     label: {
         fontSize: '20px',
-        width: '35%', // Ensures labels have the same width
+        width: '35%',
         textAlign: 'left',
     },
     formGroup: {
@@ -87,8 +121,8 @@ const styles = {
         width: '100%',
     },
     page: {
-        backgroundColor: '#444444', // Background color for the whole page
-        minHeight: '100vh', // Covers the full viewport
+        backgroundColor: '#444444',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -113,21 +147,13 @@ const styles = {
         marginBottom: '20px',
     },
     input: {
-        flexGrow: 1, // Allows the input to stretch and align properly
+        flexGrow: 1,
         padding: '10px',
         fontSize: '16px',
         borderRadius: '4px',
         backgroundColor: '#444444',
-        border: '2px solid #000000', // Sets a custom frame color (blue in this case)
+        border: '2px solid #000000',
         outline: 'none',
-    },
-    button: {
-        padding: '10px',
-        backgroundColor: 'hsl(180, 25%, 25%)',
-        color: 'white',
-        fontSize: '16px',
-        cursor: 'pointer',
-        border: 'none',
     },
     a: {
         alignSelf: 'flex-start',
