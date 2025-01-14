@@ -40,7 +40,6 @@ function SignUpPage() {
                 setErrorMessage('Username already in use.');
             } else {
                 setSuccessMessage('Sign Up Successful!');
-<<<<<<< HEAD
 
                 // To see which id has assigned to newly created user
                 response = await fetch(`http://localhost:5000/accounts/${username}`);
@@ -64,8 +63,6 @@ function SignUpPage() {
 
                 console.log('portfolio post:' + response);
 
-=======
->>>>>>> 6b7c8553af09a064253469c519308247300f6904
                 setErrorMessage('');
                 setName('');
                 setSurname('');
