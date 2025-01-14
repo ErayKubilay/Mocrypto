@@ -149,8 +149,24 @@ const UserPage = () => {
                         });
                     }
 
-                    // TODO: add bought crypto to existing if user has bought before
-                    // TODO: auto refresh after bought
+                    // If user has the cryptocurrency update amount
+                    else {
+
+                        // TODO: add bought crypto to existing if user has bought before
+                        let response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`);
+                        let ownedCryptocurrency = await response.json();
+
+                        body = { new_amount: ownedCryptocurrency.amount + amount };
+
+                        response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`, {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(body)
+                        });
+                        // TODO: auto refresh after bought
+
+                    }
+
 
 
                     body = { user_id: userID, value: amount, base_crypto: boughtCryptocurrency.shortname, type: 'Buy' };
