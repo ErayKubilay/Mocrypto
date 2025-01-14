@@ -152,7 +152,6 @@ const UserPage = () => {
                     // If user has the cryptocurrency update amount
                     else {
 
-                        // TODO: add bought crypto to existing if user has bought before
                         let response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`);
                         let ownedCryptocurrency = await response.json();
 
@@ -178,6 +177,10 @@ const UserPage = () => {
                     });
 
                     alert(`You bought ${amount} USDT worth of Bitcoin.`);
+
+                    getBalance();
+                    getPortfolio();
+                    getTransactions();
 
                 }
             }
@@ -242,6 +245,9 @@ const UserPage = () => {
 
                     alert(`You sold ${amount} USDT worth of Bitcoin.`);
 
+                    getBalance();
+                    getPortfolio();
+                    getTransactions();
                 }
             }
 
