@@ -139,7 +139,7 @@ app.get("/portfolio/:user_id", async (req, res) => {
 
         // Run the PostgreSQL query to get all portfolios for the specific user
         const portfolio = await pool.query(
-            "SELECT * FROM portfolio WHERE user_id = $1 AND CAST(crypto_id AS INTEGER) > 1",
+            "SELECT * FROM portfolio WHERE user_id = $1 AND short_name != 'USDT'",
             [user_id]
         );
 
@@ -163,7 +163,7 @@ app.get("/portfolio/:user_id/:crypto_id", async (req, res) => {
             [user_id, crypto_id]
         );
 
-        res.json(portfolio.rows[0]);
+        res.json(portfolio.rows);
 
     } catch (err) {
         console.error(err.message);
@@ -188,12 +188,7 @@ app.put("/portfolio/:user_id/:crypto_id", async (req, res) => {
             [new_amount, user_id, crypto_id]
         );
 
-        // Check if the record was updated
-        if (updatedPortfolio.rowCount === 0) {
-            return res.status(404).json({ error: "Portfolio record not found." });
-        }
-
-        res.json({ message: "Portfolio updated successfully.", portfolio: updatedPortfolio.rows[0] });
+        res.json(updatedPortfolio.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "An error occurred while updating the portfolio record." });
@@ -207,7 +202,7 @@ app.get("/balance/:user_id", async (req, res) => {
 
         // Run the PostgreSQL query to get all portfolios for the specific user
         const balance = await pool.query(
-            "SELECT * FROM portfolio WHERE user_id = $1 AND CAST(crypto_id AS INTEGER) = 1",
+            "SELECT * FROM portfolio WHERE user_id = $1 AND short_name = 'USDT'",
             [user_id]
         );
 
@@ -236,7 +231,7 @@ app.put("/balance/:user_id", async (req, res) => {
         console.log('new_balance: ' + new_balance);
         // Run the PostgreSQL query to get all portfolios for the specific user
         const updatedBalance = await pool.query(
-            "UPDATE portfolio SET amount = $1 WHERE CAST(crypto_id AS INTEGER) = 1 AND user_id = $2 RETURNING *",
+            "UPDATE portfolio SET amount = $1 WHERE short_name = 'USDT' AND user_id = $2 RETURNING *",
             [new_balance, user_id]
         );
 
