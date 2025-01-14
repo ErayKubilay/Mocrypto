@@ -208,7 +208,7 @@ const UserPage = () => {
             if (!Number.isInteger(amount) && isNaN(amount)) {
                 alert("Please enter a integer value");
             }
-            else {
+            else if (userInput != null) {
 
                 // Check wheter user has enough coin to sell
                 let response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`);
