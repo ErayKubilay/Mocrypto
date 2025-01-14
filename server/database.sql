@@ -23,8 +23,7 @@ CREATE TABLE portfolio (
 	user_id INTEGER NOT NULL,
 	short_name VARCHAR(255) NOT NULL,
 	name VARCHAR(255) NOT NULL,
-	amount FLOAT NOT NULL,
-	PRIMARY KEY (crypto_id)
+	amount FLOAT NOT NULL
 );
 
 CREATE TABLE transaction (

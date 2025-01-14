@@ -59,7 +59,7 @@ function SignUpPage() {
                 let shortName = 'USDT';
                 let name = 'Tether';
                 let amount = 10000;
-                body = { cryptoID, userID, shortName, name, amount };
+                body = { crypto_id: cryptoID, user_id: userID, short_name: shortName, name, amount };
 
                 console.log(body);
 

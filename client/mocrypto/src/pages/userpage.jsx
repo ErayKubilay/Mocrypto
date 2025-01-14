@@ -116,10 +116,14 @@ const UserPage = () => {
             }
             else if (userInput !== null) {
 
+                // Checks if the user has adequate balance
                 if (balance < amount) {
 
                     alert("Not enough balance.");
                 }
+
+
+                // If user has adequate balance
                 else {
 
                     let response = await fetch(`http://localhost:5000/cryptocurrency/${crypto_id}`);
@@ -155,14 +159,16 @@ const UserPage = () => {
                         let response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`);
                         let ownedCryptocurrency = await response.json();
 
-                        body = { new_amount: ownedCryptocurrency.amount + amount };
+
+                        console.log(ownedCryptocurrency);
+
+                        body = { new_amount: ownedCryptocurrency[0].amount + amount };
 
                         response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`, {
                             method: "PUT",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(body)
                         });
-                        // TODO: auto refresh after bought
 
                     }
 
@@ -176,7 +182,7 @@ const UserPage = () => {
                         body: JSON.stringify(body)
                     });
 
-                    alert(`You bought ${amount} USDT worth of Bitcoin.`);
+                    alert(`You bought ${amount} USDT worth of ${boughtCryptocurrency.name}.`);
 
                     getBalance();
                     getPortfolio();
@@ -243,7 +249,7 @@ const UserPage = () => {
                         body: JSON.stringify(body)
                     });
 
-                    alert(`You sold ${amount} USDT worth of Bitcoin.`);
+                    alert(`You sold ${amount} USDT worth of ${soldCryptocurrency.name}.`);
 
                     getBalance();
                     getPortfolio();
@@ -306,7 +312,7 @@ const UserPage = () => {
                             {portfolio.map(currency => (
                                 <tr id={currency.crypto_id}>
                                     <td>{currency.short_name}</td>
-                                    <td>{currency.amount}</td>
+                                    <td>{currency.amount} USDT</td>
                                     <td><button className='btn btn-danger'
                                         onClick={() => sellCrypto(currency.crypto_id)}> Sell </button></td>
                                 </tr>))}
