@@ -85,13 +85,11 @@ const styles = {
         flexDirection: 'column',
     },
     container: {
-        marginTop: '40px',
-        marginBottom: '60px',
         backgroundColor: 'lightgray',
         borderRadius: '25px',
         padding: '20px',
         maxWidth: '800px',
-        margin: '0 auto',
+        margin: '50px auto',
         fontFamily: 'Arial, sans-serif',
     },
     heading: {
