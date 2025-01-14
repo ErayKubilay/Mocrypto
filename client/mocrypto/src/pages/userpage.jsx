@@ -9,13 +9,13 @@ const UserPage = () => {
 
     const location = useLocation();
     const userID = location.state?.userID;
-
-    console.log(userID);
+    const userName = location.state?.userName;
 
     const [currencies, setCurrencies] = useState([]);
     const [portfolio, setPortfolio] = useState([]);
     const [transactions, setTransactions] = useState([]);
     const [balance, setBalance] = useState('10000');
+
 
     const getBalance = async () => {
 
@@ -54,7 +54,6 @@ const UserPage = () => {
             }
 
             //let jsonData = [{ id: 1, name: 'BTC', price: '5000' }, { id: 2, name: 'ETH', price: '1000' }];
-
 
         }
         catch (err) {
@@ -347,8 +346,10 @@ const UserPage = () => {
     ];
 
     return (
-        <div style={{ background: 'black' }}>
-            <Header style={styles.header} />
+        <div style={{
+            backgroundImage: 'linear-gradient(45deg, #131419, #292C36)'
+        }}>
+            <Header name={userName} style={styles.header} />
             <Tabs tabs={tabsData} />
             <Footer />
         </div>

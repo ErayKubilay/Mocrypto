@@ -9,7 +9,7 @@ function About() {
                 <section style={styles.section}>
                     <h1 style={styles.title}>Welcome to Mocrypto</h1>
                     <p style={styles.description}>
-                        Our mission is to provide the best tools and insights for managing your cryptocurrency portfolio. 
+                        Our mission is to provide the best tools and insights for managing your cryptocurrency portfolio.
                         Whether you're a seasoned investor or just getting started, we aim to empower you with cutting-edge solutions.
                     </p>
                 </section>
@@ -24,7 +24,7 @@ function About() {
                 <section style={styles.section}>
                     <h2 style={styles.subtitle}>Our Story</h2>
                     <p style={styles.description}>
-                        Founded in 2025, we started with a simple goal: to make cryptocurrency management easy and accessible for everyone. 
+                        Founded in 2025, we started with a simple goal: To make cryptocurrency management easy and accessible for everyone.
                     </p>
                 </section>
             </main>
@@ -35,8 +35,8 @@ function About() {
 
 const styles = {
     page: {
-        backgroundColor: '#444444',
-        minHeight: '100vh', 
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -45,7 +45,6 @@ const styles = {
         marginBottom: '80px',
         padding: '20px',
         fontFamily: "'Arial', sans-serif",
-        backgroundColor: '#444444',
         color: '#333',
     },
     section: {

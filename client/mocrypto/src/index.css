@@ -15,13 +15,11 @@
 
 .header{
   position: sticky;
-  margin-top: 10px;
   top: 0;
-  z-index: 999;
+  z-index: 1000;
   width: 100%;
-  background-color: hsl(180, 25%, 25%);
+        background: #b68c08;
   padding: 10px;
-  border-radius: 10%;
   display: flex;
   justify-content: space-between;
 }
@@ -38,13 +36,12 @@
   text-decoration: none;
   position:relative;
   font-weight: 'bold';
-  color: 'black';
   text-shadow: '2px 2px 5px rgba(0, 0, 0, 0.3)';
   margin-bottom: '20px';
   top:0;
   font-size: 46px;
   margin-right: 20px;
-  color:rgb(255, 255, 255);
+  color: black;
 
 
   &:hover:after {
@@ -56,7 +53,7 @@
     content: '';
     position: absolute;
     height: 2px;
-    background:rgb(55, 125, 143);
+    background: #5D555C;
     left: 50%;
     width: 0;
     bottom: -4px;
@@ -159,14 +156,14 @@ body {
 }
 
 .tab-headers {
-  border: 3px solid #ddd;
-  width: 40%;
-  align-content: left;
+  border: 3px solid black;
+  width: 100%;
+  align-content: center;
   position: sticky;
   margin-top: 10px;
   top: 0;
   z-index: 999;
-  background-color: hsl(180, 25%, 25%);
+  background-color: gray;
   display: flex;
   justify-content: space-between;
 }
@@ -185,10 +182,9 @@ body {
 }
 
 .tab-content {
-  width: 65%;
+  width: 100%;
   height:1000px;
   padding: 20px;
-  border: 5px solid #ddd;
   text-align: center;
 }
 /* :root {

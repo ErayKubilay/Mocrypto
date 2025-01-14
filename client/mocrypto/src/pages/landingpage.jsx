@@ -4,6 +4,7 @@ import Card from '../components/Card';
 import graph from "../assets/graph.jpg"
 import coins from "../assets/coins.jpeg"
 import market from "../assets/market.png"
+import ccc from "../assets/kapak_230537.jpg"
 
 
 function LandingPage() {
@@ -11,9 +12,9 @@ function LandingPage() {
         <div style={styles.page}>
             <Header style={styles.header} name="Mocrypto" />
             <div style={styles.container}>
-                <Card img={graph} paragraph="Analyze the Market!" title=" " path="/sign-up" />
-                <Card img={coins} paragraph="Buy Coins and Manage Your Wallet!" title="Your Money is Safe Here" path="/sign-up" />
-                <Card img={market} paragraph="Get Yourself Ready for the Real Market" path="/sign-up" />
+                <Card img={graph} paragraph="" title="Get Yourself Ready for the Real Market!" path="/sign-up" />
+                <Card img={coins} paragraph="" title="You Don't Need Money to Start!" path="/sign-up" />
+                <Card img={market} paragraph="" title="Buy Coins and Manage Your Wallet!" path="/sign-up" />
             </div>
             <Footer />
         </div>
@@ -22,8 +23,8 @@ function LandingPage() {
 
 const styles = {
     page: {
-        backgroundColor: '#444444',
-        minHeight: '100vh', 
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -42,7 +43,6 @@ const styles = {
         gap: '20px',
         padding: '20px',
         boxSizing: 'border-box',
-        backgroundColor: '#444444',
         marginTop: '130px',
         marginBottom: '195px',
     },

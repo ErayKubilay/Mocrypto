@@ -15,7 +15,7 @@ function SignUpPage() {
     const type = "user";
     const [buttonStyle, setButtonStyle] = useState({
         padding: '10px',
-        backgroundColor: 'hsl(180, 25%, 25%)',
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
         color: 'white',
         fontSize: '16px',
         cursor: 'pointer',
@@ -27,16 +27,16 @@ function SignUpPage() {
     const handleMouseEnter = () => {
         setButtonStyle((prevStyle) => ({
             ...prevStyle,
-            backgroundColor: 'hsl(180, 35%, 30%)', 
-            transform: 'scale(0.85)', 
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', 
+            backgroundColor: 'hsl(180, 35%, 30%)',
+            transform: 'scale(0.85)',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
         }));
     };
 
     const handleMouseLeave = () => {
         setButtonStyle((prevStyle) => ({
             ...prevStyle,
-            backgroundColor: 'hsl(180, 25%, 25%)', 
+            backgroundColor: 'hsl(180, 25%, 25%)',
             transform: 'scale(1)',
             boxShadow: 'none',
         }));
@@ -161,9 +161,9 @@ function SignUpPage() {
                             style={styles.input}
                         />
                     </div>
-                    <button type="submit" style={buttonStyle} 
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}>Sign Up!</button>
+                    <button type="submit" style={buttonStyle}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}>Sign Up!</button>
                 </form>
                 <a href='/log-in' style={styles.a}>Already Have an Account?</a>
             </div>
@@ -181,8 +181,8 @@ const styles = {
         textAlign: 'center',
     },
     page: {
-        backgroundColor: '#444444',
-        minHeight: '100vh', 
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -223,7 +223,7 @@ const styles = {
     },
     label: {
         fontSize: '20px',
-        width: '35%', 
+        width: '35%',
         textAlign: 'left',
     },
     input: {
@@ -243,9 +243,9 @@ const styles = {
     },
     a: {
         alignSelf: 'flex-start',
-        color: 'hsl(180, 25%, 25%)',
+        color: '#131419',
     },
-    
+
 };
 
 export default SignUpPage;

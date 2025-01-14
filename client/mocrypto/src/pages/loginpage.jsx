@@ -10,7 +10,7 @@ function LoginPage() {
     const [errorMessage, setErrorMessage] = useState('');
     const [buttonStyle, setButtonStyle] = useState({
         padding: '10px',
-        backgroundColor: 'hsl(180, 25%, 25%)',
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
         color: 'white',
         fontSize: '16px',
         cursor: 'pointer',
@@ -21,16 +21,16 @@ function LoginPage() {
     const handleMouseEnter = () => {
         setButtonStyle((prevStyle) => ({
             ...prevStyle,
-            backgroundColor: 'hsl(180, 35%, 30%)', 
-            transform: 'scale(0.85)', 
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', 
+            backgroundColor: 'hsl(180, 35%, 30%)',
+            transform: 'scale(0.85)',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
         }));
     };
 
     const handleMouseLeave = () => {
         setButtonStyle((prevStyle) => ({
             ...prevStyle,
-            backgroundColor: 'hsl(180, 25%, 25%)', 
+            backgroundColor: 'hsl(180, 25%, 25%)',
             transform: 'scale(1)',
             boxShadow: 'none',
         }));
@@ -49,7 +49,7 @@ function LoginPage() {
 
         if (username === user.username && password === user.password) {
             alert('Login successful. Welcome, ' + username + '!');
-            navigate('/userxxx', { state: { userID: user.id } });
+            navigate('/userxxx', { state: { userID: user.id, userName: user.username } });
         } else if (username === 'admin' && password === 'admin') {
             alert('Welcome back Administrator!');
             navigate('/admin');
@@ -128,8 +128,8 @@ const styles = {
         width: '100%',
     },
     page: {
-        backgroundColor: '#444444',
-        minHeight: '100vh', 
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -168,7 +168,7 @@ const styles = {
     },
     a: {
         alignSelf: 'flex-start',
-        color: 'hsl(180, 25%, 25%)',
+        color: '#131419',
     },
     error: {
         color: 'red',

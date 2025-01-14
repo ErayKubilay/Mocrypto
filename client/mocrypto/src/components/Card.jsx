@@ -8,7 +8,7 @@ function Card(props) {
 
 
     const handleCardClick = () => {
-        navigate(props.path); 
+        navigate(props.path);
     };
 
     const styles = {
@@ -18,8 +18,8 @@ function Card(props) {
             borderRadius: '16px',
             textAlign: 'center',
             padding: '30px',
-            boxShadow: isHovered 
-                ? '10px 10px 50px rgba(0, 0, 0, 0.2)' 
+            boxShadow: isHovered
+                ? '10px 10px 50px rgba(0, 0, 0, 0.2)'
                 : '20px 15px 10px rgba(0, 0, 0, 0.1)',
             height: '350px',
             width: '350px',

@@ -18,16 +18,16 @@ function Contact() {
     const handleMouseEnter = () => {
         setButtonStyle((prevStyle) => ({
             ...prevStyle,
-            backgroundColor: 'hsl(180, 35%, 30%)', 
-            transform: 'scale(0.85)', 
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)', 
+            backgroundColor: 'hsl(180, 35%, 30%)',
+            transform: 'scale(0.85)',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
         }));
     };
 
     const handleMouseLeave = () => {
         setButtonStyle((prevStyle) => ({
             ...prevStyle,
-            backgroundColor: 'hsl(180, 25%, 25%)', 
+            backgroundColor: 'hsl(180, 25%, 25%)',
             transform: 'scale(1)',
             boxShadow: 'none',
         }));
@@ -51,21 +51,21 @@ function Contact() {
                         <h3 style={styles.subheading}>Send a Message</h3>
                         <label style={styles.label}>Your Name</label>
                         <input type="text" style={styles.input} placeholder="Enter your name" />
-                        
+
                         <label style={styles.label}>Your Email</label>
                         <input type="email" style={styles.input} placeholder="Enter your email" />
-                        
+
                         <label style={styles.label}>Message</label>
                         <textarea style={styles.textarea} placeholder="Type your message"></textarea>
-                        
+
                         <button style={buttonStyle}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}>Submit</button>
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}>Submit</button>
                     </form>
                 </div>
                 <div style={styles.map}>
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.250436651779!2d27.2066086!3d38.3663276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b9618fb082a33f%3A0xb863aae743ff19ec!2sDEPARK%20Alfa-Beta%20Binalar%C4%B1%20(Dokuz%20Eyl%C3%BCl%20%C3%9Cniversitesi%20Teknopark%C4%B1)!5e0!3m2!1str!2str!4v1736643003096!5m2!1str!2str"                        style={styles.iframe}
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3128.250436651779!2d27.2066086!3d38.3663276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b9618fb082a33f%3A0xb863aae743ff19ec!2sDEPARK%20Alfa-Beta%20Binalar%C4%B1%20(Dokuz%20Eyl%C3%BCl%20%C3%9Cniversitesi%20Teknopark%C4%B1)!5e0!3m2!1str!2str!4v1736643003096!5m2!1str!2str" style={styles.iframe}
                         allowFullScreen=""
                         loading="lazy"
                         title="Location"
@@ -79,8 +79,8 @@ function Contact() {
 
 const styles = {
     page: {
-        backgroundColor: '#444444',
-        minHeight: '100vh', 
+        backgroundImage: 'linear-gradient(45deg, #131419, #292C36)',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
     },
