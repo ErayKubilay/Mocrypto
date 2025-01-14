@@ -139,7 +139,7 @@ app.get("/portfolio/:user_id", async (req, res) => {
 
         // Run the PostgreSQL query to get all portfolios for the specific user
         const portfolio = await pool.query(
-            "SELECT * FROM portfolio WHERE user_id = $1 AND short_name != 'USDT'",
+            "SELECT * FROM portfolio WHERE user_id = $1 AND short_name != 'USDT' ORDER BY short_name ASC",
             [user_id]
         );
 

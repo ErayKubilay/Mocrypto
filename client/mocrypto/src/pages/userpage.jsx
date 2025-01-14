@@ -217,14 +217,14 @@ const UserPage = () => {
 
                 console.log(soldCryptocurrency);
 
-                if (amount > soldCryptocurrency.amount) {
+                if (amount > soldCryptocurrency[0].amount) {
 
                     alert("You don't have enough coin.");
                 }
                 else {
 
                     // Update cryptocurrency amount in portfolio
-                    let body = { new_amount: soldCryptocurrency.amount - amount };
+                    let body = { new_amount: soldCryptocurrency[0].amount - amount };
 
                     response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`, {
                         method: "PUT",
@@ -242,7 +242,7 @@ const UserPage = () => {
                     });
 
                     // Add transaction to transactions
-                    body = { user_id: userID, value: amount, base_crypto: soldCryptocurrency.short_name, type: 'Sell' };
+                    body = { user_id: userID, value: amount, base_crypto: soldCryptocurrency[0].short_name, type: 'Sell' };
 
                     response = await fetch('http://localhost:5000/transaction', {
                         method: "POST",
@@ -250,7 +250,7 @@ const UserPage = () => {
                         body: JSON.stringify(body)
                     });
 
-                    alert(`You sold ${amount} USDT worth of ${soldCryptocurrency.name}.`);
+                    alert(`You sold ${amount} USDT worth of ${soldCryptocurrency[0].name}.`);
 
                     getBalance();
                     getPortfolio();
@@ -356,11 +356,11 @@ const UserPage = () => {
 };
 const styles = {
     header: {
-        width: '100%', 
-        padding: '20px', 
-        backgroundColor: '#333', 
+        width: '100%',
+        padding: '20px',
+        backgroundColor: '#333',
         color: 'white',
-        textAlign: 'center', 
+        textAlign: 'center',
     },
 };
 
