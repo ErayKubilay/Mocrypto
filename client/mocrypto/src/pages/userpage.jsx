@@ -111,10 +111,10 @@ const UserPage = () => {
             // Check if input is a valid integer
             const amount = Number(userInput);
 
-            if (!Number.isInteger(amount) && isNaN(amount)) {
+            if (!Number.isInteger(amount) || isNaN(amount) || userInput === '') {
                 alert("Please enter a integer value");
             }
-            else {
+            else if (userInput !== null) {
 
                 if (balance < amount) {
 
@@ -172,6 +172,67 @@ const UserPage = () => {
     }
 
 
+    const sellCrypto = async (crypto_id) => {
+
+        try {
+            const userInput = prompt("Please enter USDT amount:");
+
+            // Check if input is a valid integer
+            const amount = Number(userInput);
+
+            if (!Number.isInteger(amount) && isNaN(amount)) {
+                alert("Please enter a integer value");
+            }
+            else {
+
+                // Check wheter user has enough coin to sell
+                let response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`);
+                let soldCryptocurrency = await response.json();
+
+                console.log(soldCryptocurrency);
+
+                if (amount > soldCryptocurrency.amount) {
+
+                    alert("You don't have enough coin.");
+                }
+                else {
+
+                    // Update cryptocurrency amount in portfolio
+                    let body = { new_amount: soldCryptocurrency.amount - amount };
+
+                    response = await fetch(`http://localhost:5000/portfolio/${userID}/${crypto_id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    });
+
+                    // Update balance
+                    body = { new_balance: balance + amount };
+
+                    response = await fetch(`http://localhost:5000/balance/${userID}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    });
+
+                    // Add transaction to transactions
+                    body = { user_id: userID, value: amount, base_crypto: soldCryptocurrency.short_name, type: 'Sell' };
+
+                    response = await fetch('http://localhost:5000/transaction', {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    });
+
+                    alert(`You sold ${amount} USDT worth of Bitcoin.`);
+
+                }
+            }
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
 
     // For reference, delete it
     /*<tr>

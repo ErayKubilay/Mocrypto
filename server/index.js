@@ -163,11 +163,40 @@ app.get("/portfolio/:user_id/:crypto_id", async (req, res) => {
             [user_id, crypto_id]
         );
 
-        res.json(portfolio.rows);
+        res.json(portfolio.rows[0]);
 
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "An error occurred while fetching the portfolio record." });
+    }
+});
+
+// UPDATE specific crpyto of specific user
+app.put("/portfolio/:user_id/:crypto_id", async (req, res) => {
+    try {
+        const { user_id, crypto_id } = req.params;
+        const { new_amount } = req.body;
+
+        // Validate the input
+        if (!new_amount || isNaN(new_amount)) {
+            return res.status(400).json({ error: "Invalid or missing 'new_amount' in request body." });
+        }
+
+        // Update the amount in the database
+        const updatedPortfolio = await pool.query(
+            "UPDATE portfolio SET amount = $1 WHERE user_id = $2 AND crypto_id = $3 RETURNING *",
+            [new_amount, user_id, crypto_id]
+        );
+
+        // Check if the record was updated
+        if (updatedPortfolio.rowCount === 0) {
+            return res.status(404).json({ error: "Portfolio record not found." });
+        }
+
+        res.json({ message: "Portfolio updated successfully.", portfolio: updatedPortfolio.rows[0] });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "An error occurred while updating the portfolio record." });
     }
 });
 // GET user balance which is USDT amount
