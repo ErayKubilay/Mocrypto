@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import { json, useNavigate } from 'react-router-dom';
-
-
-
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
     const navigate = useNavigate();
-    //const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -17,51 +13,33 @@ function LoginPage() {
         e.preventDefault();
 
         if (!username || !password) {
-            setErrorMessage('Please enter both email and password.');
+            setErrorMessage('Please enter both username and password.');
             return;
         }
 
-        // Fetch does get request default
         const response = await fetch(`http://localhost:5000/accounts/${username}`);
-        const user = await response.json()
-
-        // console.log(user);
-        // console.log(response.status);
-
+        const user = await response.json();
 
         if (username === user.username && password === user.password) {
             alert('Login successful. Welcome, ' + username + '!');
             navigate('/userxxx', { state: { userID: user.id } });
-        }
-
-        else if (username === 'admin' && password === 'admin') {
+        } else if (username === 'admin' && password === 'admin') {
             alert('Welcome back Administrator!');
             navigate('/admin');
-        }
-        else {
+        } else {
             setErrorMessage('Wrong username or password.');
         }
     };
 
-
     return (
-        <body>
+        <body style={styles.page}>
             <Header name="Log In" />
             <div className="login-container" style={styles.container}>
+                <h1 style={styles.title}>MOCRYPTO</h1>
                 {errorMessage && <p style={styles.error}>{errorMessage}</p>}
                 <form onSubmit={handleSubmit} style={styles.form}>
-                    {/* <div>
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        style={styles.input}
-                    />
-                    </div> */}
-                    <div>
-                        <label htmlFor="username">Username:</label>
+                    <div style={styles.formGroup}>
+                        <label htmlFor="username"  style={styles.label}>Username:</label>
                         <input
                             type="text"
                             id="username"
@@ -70,8 +48,8 @@ function LoginPage() {
                             style={styles.input}
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password:</label>
+                    <div style={styles.formGroup}>
+                        <label htmlFor="password"  style={styles.label}>Password:</label>
                         <input
                             type="password"
                             id="password"
@@ -81,7 +59,7 @@ function LoginPage() {
                         />
                     </div>
                     <button type="submit" style={styles.button}>Login</button>
-                    <a href='/sign-up' style={styles.a}>Havent Signed Up Yet?</a>
+                    <a href='/sign-up' style={styles.a}>Haven't Signed Up Yet?</a>
                 </form>
             </div>
             <Footer />
@@ -90,6 +68,30 @@ function LoginPage() {
 }
 
 const styles = {
+    label: {
+        fontSize: '20px',
+        width: '35%', // Ensures labels have the same width
+        textAlign: 'left',
+    },
+    formGroup: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '10px',
+        width: '100%',
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
+        width: '100%',
+    },
+    page: {
+        backgroundColor: '#444444', // Background color for the whole page
+        minHeight: '100vh', // Covers the full viewport
+        display: 'flex',
+        flexDirection: 'column',
+    },
     container: {
         padding: '40px',
         borderRadius: '10%',
@@ -99,22 +101,25 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '175px',
+        marginTop: '45px',
         marginBottom: '130px',
+        boxShadow: '20px 15px 10px rgba(0, 0, 0, 0.1)',
     },
-    a: {
-        color: 'hsl(180, 25%, 25%)',
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '300px',
-        gap: '40px',
+    title: {
+        fontSize: '36px',
+        fontWeight: 'bold',
+        color: 'black',
+        textShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+        marginBottom: '20px',
     },
     input: {
-        marginTop: '15px',
+        flexGrow: 1, // Allows the input to stretch and align properly
         padding: '10px',
         fontSize: '16px',
+        borderRadius: '4px',
+        backgroundColor: '#444444',
+        border: '2px solid #000000', // Sets a custom frame color (blue in this case)
+        outline: 'none',
     },
     button: {
         padding: '10px',
@@ -123,6 +128,10 @@ const styles = {
         fontSize: '16px',
         cursor: 'pointer',
         border: 'none',
+    },
+    a: {
+        alignSelf: 'flex-start',
+        color: 'hsl(180, 25%, 25%)',
     },
     error: {
         color: 'red',

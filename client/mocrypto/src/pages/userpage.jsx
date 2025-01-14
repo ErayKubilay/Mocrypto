@@ -1,4 +1,5 @@
 import Card from '../components/Card.jsx'
+import Header from '../components/Header.jsx'
 import Tabs from '../components/Tabs.jsx'
 import Footer from '../components/Footer.jsx';
 import { Fragment, useEffect, useState } from 'react';
@@ -347,11 +348,20 @@ const UserPage = () => {
 
     return (
         <div style={{ background: 'black' }}>
+            <Header style={styles.header} />
             <Tabs tabs={tabsData} />
             <Footer />
         </div>
     );
 };
-
+const styles = {
+    header: {
+        width: '100%', 
+        padding: '20px', 
+        backgroundColor: '#333', 
+        color: 'white',
+        textAlign: 'center', 
+    },
+};
 
 export default UserPage;
